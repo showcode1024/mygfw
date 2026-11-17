@@ -72,10 +72,15 @@ fi
 echo -e "${BLUE}[3/5] 正在下载 OpenGFW 二进制程序 (${OPENGFW_VERSION})...${NC}"
 mkdir -p "${INSTALL_DIR}"
 
-DOWNLOAD_URL="https://github.com/HyNetworks/OpenGFW/releases/download/${OPENGFW_VERSION}/OpenGFW-linux-${BIN_ARCH}"
+DOWNLOAD_URL="https://raw.githubusercontent.com/showcode1024/mygfw/main/bin/OpenGFW-linux-${BIN_ARCH}"
+FALLBACK_URL="https://github.com/showcode1024/mygfw/releases/download/${OPENGFW_VERSION}/OpenGFW-linux-${BIN_ARCH}"
+
 if ! curl -fsSL -o "${BIN_PATH}" "${DOWNLOAD_URL}"; then
-    echo -e "${RED}[ERROR] 下载 OpenGFW 失败，请检查网络或 GitHub 连通性。${NC}"
-    exit 1
+    echo -e "${YELLOW}[INFO] 从主分支仓库拉取未完成，尝试从 Release 镜像下载...${NC}"
+    if ! curl -fsSL -o "${BIN_PATH}" "${FALLBACK_URL}"; then
+        echo -e "${RED}[ERROR] 下载 OpenGFW 失败，请检查网络或 GitHub 连通性。${NC}"
+        exit 1
+    fi
 fi
 chmod +x "${BIN_PATH}"
 echo -e "${GREEN}      程序文件已就绪: ${BIN_PATH}${NC}"
