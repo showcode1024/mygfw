@@ -1,6 +1,6 @@
 # mygfw — OpenGFW 一键生产级部署脚本
 
-基于 [apernet/OpenGFW](https://github.com/apernet/OpenGFW) 的深度包检测 (DPI) 自动化防火墙部署套件。专为 NAT VPS / 服务器设计，用于主动封禁高危代理协议和境内域名伪装，防止整机 IP 被墙。
+基于 [HyNetworks/OpenGFW](https://github.com/HyNetworks/OpenGFW) 的深度包检测 (DPI) 自动化防火墙部署套件。专为 NAT VPS / 服务器设计，用于主动封禁高危代理协议和境内域名伪装，防止整机 IP 被墙。
 
 ---
 

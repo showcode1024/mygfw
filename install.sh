@@ -72,7 +72,7 @@ fi
 echo -e "${BLUE}[3/5] 正在下载 OpenGFW 二进制程序 (${OPENGFW_VERSION})...${NC}"
 mkdir -p "${INSTALL_DIR}"
 
-DOWNLOAD_URL="https://github.com/apernet/OpenGFW/releases/download/${OPENGFW_VERSION}/OpenGFW-linux-${BIN_ARCH}"
+DOWNLOAD_URL="https://github.com/HyNetworks/OpenGFW/releases/download/${OPENGFW_VERSION}/OpenGFW-linux-${BIN_ARCH}"
 if ! curl -fsSL -o "${BIN_PATH}" "${DOWNLOAD_URL}"; then
     echo -e "${RED}[ERROR] 下载 OpenGFW 失败，请检查网络或 GitHub 连通性。${NC}"
     exit 1
