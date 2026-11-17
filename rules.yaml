@@ -1,0 +1,43 @@
+# 1. 封禁 Shadowsocks 与 原生密文 VMess-TCP (通过 FET 密文熵值与全加密流量特征识别)
+- name: "Block_Shadowsocks_and_VMess"
+  action: block
+  log: true
+  expr: fet != nil && fet.yes
+
+# 2. 封禁明文 VMess-WS / HTTP WebSocket 代理 (无 TLS 加密的 WebSocket 握手)
+- name: "Block_Plaintext_VMess_WS"
+  action: block
+  log: true
+  expr: lower(string(http?.req?.headers?.upgrade)) == "websocket"
+
+# 3. 封禁明文 SOCKS4/5 代理
+- name: "Block_Socks"
+  action: block
+  log: true
+  expr: socks != nil
+
+# 4. 封禁 Trojan 代理协议
+- name: "Block_Trojan"
+  action: block
+  log: true
+  expr: trojan != nil && trojan.yes
+
+# 5. 拦截境内域名 SNI 伪装 (防止租户拿国内大厂域名伪装引来墙封 IP，同时覆盖 TLS 与 QUIC)
+- name: "Block_Domestic_SNI_Spoofing"
+  action: block
+  log: true
+  expr: >
+    let sni = lower(string(tls?.req?.sni) != "" ? string(tls?.req?.sni) : string(quic?.req?.sni));
+    sni != "" && (
+      sni endsWith ".cn" ||
+      sni contains "douyin.com" ||
+      sni contains "baidu.com" ||
+      sni contains "qq.com" ||
+      sni contains "bilibili.com" ||
+      sni contains "taobao.com" ||
+      sni contains "jd.com" ||
+      sni contains "alipay.com" ||
+      sni contains "163.com" ||
+      sni contains "weibo.com" ||
+      sni contains "zhihu.com"
+    )

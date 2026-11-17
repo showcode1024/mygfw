@@ -1,0 +1,17 @@
+io:
+  queueSize: 1024
+  queueNum: 100          # 绑定的 Netfilter 队列号
+  table: opengfw         # 自动管理的 nftables 表名
+  connMarkAccept: 1001   # 内核硬件级直通标记 (0x3e9)
+  connMarkDrop: 1002     # 内核硬件级丢弃标记 (0x3ea)
+  rcvBuf: 4194304        # 接收套接字缓冲 (4MB，大流量防丢包)
+  sndBuf: 4194304        # 发送套接字缓冲 (4MB)
+  local: true            # 审查宿主机及监听端口流量
+  rst: false             # 拦截时静默丢弃，不回传 TCP RST，防扫描探测
+
+workers:
+  count: 2               # 工作线程数
+  queueSize: 16
+  tcpMaxBufferedPagesTotal: 4096
+  tcpMaxBufferedPagesPerConn: 64
+  udpMaxStreams: 4096
